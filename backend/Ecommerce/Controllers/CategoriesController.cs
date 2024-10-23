@@ -62,9 +62,37 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateCategoryRequest body)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            var result = await _categoriesService.UpdateCategoryAsync(id, body);
+
+            if (result.IsFailed)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Title = "Not Found",
+                    Detail = result.Error.Message
+                });
+            }
+
+            return Ok(result.Value);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _categoriesService.GetCategoryAsync(id);
+
+            if (result.IsFailed)
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Title = "Not Found",
+                    Detail = result.Error.Message
+                });
+            }
+
+            return Ok(result.Value);
         }
     }
 }
