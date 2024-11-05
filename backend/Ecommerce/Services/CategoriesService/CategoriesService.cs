@@ -55,7 +55,7 @@ namespace Ecommerce.Services.CategoriesService
         public async Task<PaginatedDataDto<CategoryDto>> GetCategoriesAsync(int page = 1, int pageSize = 0)
         {
             var query = _context.Categories.OrderByDescending(c => c.CreatedAt).Select(c =>
-                new CategoryDto(c.Id, c.Name, c.Parent != null ? c.Parent.Id : null)
+                new CategoryDto(c.Id, c.Name, c.Parent != null ? c.Parent.Id : null, c.Parent != null ? c.Parent.Name : null)
             );
 
 
