@@ -1,12 +1,18 @@
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import AdminHeader from '@/components/ui/AdminHeader'
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/_admin/admin/products/create')({
   component: () => (
     <div>
-      <h1 className="text-2xl font-medium">Create product</h1>
+      <AdminHeader title="Create product" path="/Products/Create">
+        <Button asChild>
+          <Link to="/admin/products">Products</Link>
+        </Button>
+      </AdminHeader>
       <CreateProductForm />
     </div>
   )
@@ -15,10 +21,8 @@ export const Route = createFileRoute('/_admin/admin/products/create')({
 function CreateProductForm() {
   const form = useForm()
   const { control, handleSubmit } = form
-  
-  const onSubmit = (data) => {
 
-  }
+  const onSubmit = (data) => {}
 
   return (
     <Form {...form}>

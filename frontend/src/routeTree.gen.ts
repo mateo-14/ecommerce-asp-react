@@ -20,6 +20,8 @@ import { Route as AdminAdminFiltersImport } from './routes/_admin/admin/filters'
 import { Route as AdminAdminProductsIndexImport } from './routes/_admin/admin/products/index'
 import { Route as AdminAdminCategoriesIndexImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminProductsCreateImport } from './routes/_admin/admin/products/create'
+import { Route as AdminAdminCategoriesCreateImport } from './routes/_admin/admin/categories/create'
+import { Route as AdminAdminCategoriesEditCategoryIdImport } from './routes/_admin/admin/categories/edit/$categoryId'
 
 // Create/Update Routes
 
@@ -68,6 +70,19 @@ const AdminAdminProductsCreateRoute = AdminAdminProductsCreateImport.update({
   getParentRoute: () => AdminRoute,
 } as any)
 
+const AdminAdminCategoriesCreateRoute = AdminAdminCategoriesCreateImport.update(
+  {
+    path: '/admin/categories/create',
+    getParentRoute: () => AdminRoute,
+  } as any,
+)
+
+const AdminAdminCategoriesEditCategoryIdRoute =
+  AdminAdminCategoriesEditCategoryIdImport.update({
+    path: '/admin/categories/edit/$categoryId',
+    getParentRoute: () => AdminRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -114,6 +129,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminIndexImport
       parentRoute: typeof AdminImport
     }
+    '/_admin/admin/categories/create': {
+      id: '/_admin/admin/categories/create'
+      path: '/admin/categories/create'
+      fullPath: '/admin/categories/create'
+      preLoaderRoute: typeof AdminAdminCategoriesCreateImport
+      parentRoute: typeof AdminImport
+    }
     '/_admin/admin/products/create': {
       id: '/_admin/admin/products/create'
       path: '/admin/products/create'
@@ -135,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminProductsIndexImport
       parentRoute: typeof AdminImport
     }
+    '/_admin/admin/categories/edit/$categoryId': {
+      id: '/_admin/admin/categories/edit/$categoryId'
+      path: '/admin/categories/edit/$categoryId'
+      fullPath: '/admin/categories/edit/$categoryId'
+      preLoaderRoute: typeof AdminAdminCategoriesEditCategoryIdImport
+      parentRoute: typeof AdminImport
+    }
   }
 }
 
@@ -144,9 +173,11 @@ export const routeTree = rootRoute.addChildren({
   AdminRoute: AdminRoute.addChildren({
     AdminAdminFiltersRoute,
     AdminAdminIndexRoute,
+    AdminAdminCategoriesCreateRoute,
     AdminAdminProductsCreateRoute,
     AdminAdminCategoriesIndexRoute,
     AdminAdminProductsIndexRoute,
+    AdminAdminCategoriesEditCategoryIdRoute,
   }),
   EcommerceRoute: EcommerceRoute.addChildren({
     EcommerceProductRoute,
@@ -171,9 +202,11 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_admin/admin/filters",
         "/_admin/admin/",
+        "/_admin/admin/categories/create",
         "/_admin/admin/products/create",
         "/_admin/admin/categories/",
-        "/_admin/admin/products/"
+        "/_admin/admin/products/",
+        "/_admin/admin/categories/edit/$categoryId"
       ]
     },
     "/_ecommerce": {
@@ -199,6 +232,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_admin/admin/index.tsx",
       "parent": "/_admin"
     },
+    "/_admin/admin/categories/create": {
+      "filePath": "_admin/admin/categories/create.tsx",
+      "parent": "/_admin"
+    },
     "/_admin/admin/products/create": {
       "filePath": "_admin/admin/products/create.tsx",
       "parent": "/_admin"
@@ -209,6 +246,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_admin/admin/products/": {
       "filePath": "_admin/admin/products/index.tsx",
+      "parent": "/_admin"
+    },
+    "/_admin/admin/categories/edit/$categoryId": {
+      "filePath": "_admin/admin/categories/edit/$categoryId.tsx",
       "parent": "/_admin"
     }
   }

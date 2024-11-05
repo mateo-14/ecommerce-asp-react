@@ -11,12 +11,16 @@ export class HTTPClient {
   constructor(public readonly baseUrl: string, private readonly headers: Record<string, string> = {}) {}
 
   private async handleResponse<T>(response: Response): Promise<T> {
-    const data = await response.json() 
-    if (!response.ok) {
-      throw new HTTPError(response, data)
+    if (response.headers.get('Content-Type')?.includes('application/json')) {
+      const data = await response.json() 
+      if (!response.ok) {
+        throw new HTTPError(response, data)
+      }
+  
+      return data as T
     }
 
-    return data as T
+    return response as unknown as T
   }
 
   

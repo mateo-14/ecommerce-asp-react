@@ -25,9 +25,9 @@ function Layout() {
   return (
     <div className="flex min-h-screen">
       <Menu />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <Header />
-        <div className="mt-4 px-4">
+        <div className="mt-4 px-4 h-full">
           <Outlet />
         </div>
       </div>

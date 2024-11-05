@@ -1,3 +1,4 @@
+import AdminHeader from "@/components/ui/AdminHeader"
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,13 +16,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { createFileRoute } from '@tanstack/react-router'
-import { MoreHorizontal } from 'lucide-react'
+import { Link, createFileRoute } from '@tanstack/react-router'
+import {  MoreHorizontal } from 'lucide-react'
 
 export const Route = createFileRoute('/_admin/admin/products/')({
   component: () => (
     <div>
-      <h1 className="text-2xl font-medium">Products</h1>
+      <AdminHeader title="Products" path="/Products">
+        <Button asChild>
+          <Link to="/admin/products/create">Create</Link>
+        </Button>
+      </AdminHeader>
       <div className="rounded-md border mt-6">
         <Table>
           <TableHeader>
