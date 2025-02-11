@@ -3,9 +3,12 @@
     public class LocalStorageService : IStorageService
     {
         private readonly string? _storagePath;
+        private readonly string? _storageBaseUrl;
+
         public LocalStorageService(IConfiguration configuration)
         {
             _storagePath = configuration.GetValue<string>("Storage:Path");
+            _storageBaseUrl = configuration.GetValue<string>("Storage:BaseURL");
         }
         public async Task<string> UploadFileAsync(Stream image, string fileName, string? contentType = null)
         {
@@ -47,6 +50,16 @@
             {
                 Directory.CreateDirectory(path);
             }
+        }
+
+        public string GetFileUrl(string key) 
+        {
+            if (_storageBaseUrl is null) 
+            {
+                throw new InvalidOperationException("Storage base url is not configured");
+            }
+
+            return $"{_storageBaseUrl}/{key}";
         }
     }
 }

@@ -11,5 +11,6 @@
         /// <returns></returns>
         Task<string> UploadFileAsync(Stream file, string fileName, string? contentType = null);
         Task DeleteFileAsync(string key);
+        string GetFileUrl(string key);
     }
 }

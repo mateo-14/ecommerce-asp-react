@@ -112,7 +112,7 @@ namespace Ecommerce.Services.ProductService
                         await _storageService.DeleteFileAsync(image);
                     }
                 }
-    
+
                 throw;
             }
         }
@@ -191,14 +191,23 @@ namespace Ecommerce.Services.ProductService
             var pageSize = query.PageSize <= 0 ? 10 : query.PageSize;
             var count = await _context.Products.CountAsync();
             var products = await getProductsQuery.Select(p =>
-                new ProductDto(p.Id, p.Name, p.Slug, p.Description, p.Price, p.Stock, p.Images, p.Category != null ? new Category
-                {
-                    Id = p.Category.Id,
-                    Name = p.Category.Name
-                } : null,
-                p.Filters.Select(f =>
-                    new FilterOptionDto(f.Id, f.Name, f.FilterGroup != null ? new FilterGroupDto(f.FilterGroup.Id, f.FilterGroup.Name) : null)
-                ).ToList())
+                new ProductDto(
+                    p.Id, 
+                    p.Name,
+                    p.Slug, 
+                    p.Description, 
+                    p.Price, 
+                    p.Stock,
+                    p.Images.Select(i => _storageService.GetFileUrl(i)).ToList(), 
+                    p.Category != null ? new Category
+                        {
+                            Id = p.Category.Id,
+                            Name = p.Category.Name
+                        } : null,
+                    p.Filters.Select(f =>
+                        new FilterOptionDto(f.Id, f.Name, f.FilterGroup != null ? new FilterGroupDto(f.FilterGroup.Id, f.FilterGroup.Name) : null)
+                    ).ToList()
+                )
             ).Skip((query.Page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             return new PaginatedDataDto<ProductDto>(products, query.Page, pageSize, (int)Math.Ceiling((double)count / pageSize), count);

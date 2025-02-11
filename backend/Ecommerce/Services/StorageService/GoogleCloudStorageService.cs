@@ -23,5 +23,10 @@ namespace Ecommerce.Services.StorageService
         {
             await _storage.DeleteObjectAsync("ecommerce-59554.appspot.com", key);
         }
+
+        public string GetFileUrl(string key)
+        {
+            return $"https://storage.googleapis.com/ecommerce-59554.appspot.com/{key}";
+        }
     }
 }
