@@ -163,12 +163,12 @@ function CategoryActions({ category }: CategoryActionsProps) {
       queryClient.invalidateQueries({
         queryKey: categoriesQueryOptions(page).queryKey,
       })
-      setConfirmDeleteOpen(false)
     },
   })
 
-  const handleDeleteCategory = () => {
-    deleteMutation.mutate(category.id)
+  const handleDeleteCategory = async () => {
+    await deleteMutation.mutate(category.id)
+    setConfirmDeleteOpen(false)
   }
 
   return (

@@ -178,12 +178,12 @@ function ProductActions({ product }: ProductActionsProps) {
       queryClient.invalidateQueries({
         queryKey: productsQueryOptions(page).queryKey
       })
-      setConfirmDeleteOpen(false)
     }
   })
 
-  const handleDeleteProduct = () => {
-    deleteMutation.mutate(product.id)
+  const handleDeleteProduct = async () => {
+    await deleteMutation.mutate(product.id)
+    setConfirmDeleteOpen(false)
   }
 
   return (
